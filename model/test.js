@@ -65,3 +65,27 @@ console.log(b.asString());
 
 console.log (b instanceof A); //true
 console.log (b instanceof Backbone.Model);
+
+//-----------Attributes
+//use set and get method for attributes. escape is like get, but used to escape html
+
+var Animal = Backbone.Model.extend({
+    dump : function(){
+          console.log(JSON.stringify(this.toJSON()));
+    }
+});
+
+
+var cat = new Animal ({type : 'mammal'});
+
+cat.set ({
+    color : 'black',
+    name : 'tintin'
+});
+
+//if you append the below page to browser window, it will print the alert window
+cat.set({description : '<script> alert('This is injection'); </script>'})
+
+cat.dump();
+
+console.log(cat.escape('description')); // &lt;script&gt; This is injection &lt;/script&gt;
