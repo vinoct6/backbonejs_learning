@@ -127,4 +127,17 @@ volcano.on("disaster:eruption", function(opt) {
 
 volcano.trigger('disaster:eruption',{plan : 'run'});
 
-volcano.off('disaster:eruption'); //Remove every event handler associated with that event. 
+volcano.off('disaster:eruption'); //Remove every event handler associated with that event.
+
+// -- Model Identity
+
+/*The id property represents the model's persistant identity. It is undefined until the model has
+been saved. When model is saved, the id is set to server's identifier .
+The cid is a temporary identfier, used until the object is assigned an id property. Once a model is
+saved, cid is no longer required.  Model objects have a isNew method, that is used to identify if hte model
+has been saved and has an id property*/
+
+var ford = new Backbone.Model({});
+console.log(ford.id); //undefined
+console.log(ford.cid);
+console.log(ford.isNew()); // true - it hasn't been saved to server.
