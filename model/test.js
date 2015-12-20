@@ -139,5 +139,20 @@ has been saved and has an id property*/
 
 var ford = new Backbone.Model({});
 console.log(ford.id); //undefined
-console.log(ford.cid);
+console.log(ford.cid); //c8
 console.log(ford.isNew()); // true - it hasn't been saved to server.
+
+// -- Defaults
+
+/*When you define a new backbone model, you have the option to specifiy the default attributes. These specifiy
+the default values for attributes that are not set in the constructor*/
+
+var Vehicle =  Backbone.Model.extend({   //look there is no 'new' keyword here
+    defaults : {
+          'color' : 'white',
+          'type' : 'car'
+    }
+});
+
+var car = new Vehicle();
+console.log(car.get('color')); //white
