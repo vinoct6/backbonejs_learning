@@ -196,3 +196,23 @@ car1.set('foo','bar');
 car1.set('color','black', {validate : true});
 
 console.log(car1.get('color'));
+
+// toJSON
+
+/*
+  converts Model into Javascript object and NOT JSON string.
+  It returns an object containing copies of the model's atrributes
+
+  This object can then be passed to JSON.stringify to get the actual JSON object.
+
+*/
+
+console.log(JSON.stringify(car1.toJSON()));
+
+/*save, fetch and destroy to synchronize with server
+
+save performs insert or update depending upon the state of object.
+destry deletes the model from the server
+fetch updates the model with server side state.
+
+*/
