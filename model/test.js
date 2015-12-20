@@ -156,3 +156,43 @@ var Vehicle =  Backbone.Model.extend({   //look there is no 'new' keyword here
 
 var car = new Vehicle();
 console.log(car.get('color')); //white
+
+//---Validation
+
+/*Backbone exposes Model validity through two methods. 'validate' and 'isValid'.
+'validate' tests the validity of the model and returns any errors found.
+'isValid' returns a boolean indicating if the model is currently valid or not according the validate method
+
+Validate is called by backbone prior to performing'set' and 'save' operations.
+backbone now requires the {validate:true} to be passed with 'set' to trigger validation.
+If the model is invalid, the operation is cancelled and an error operation  is triggered.
+*/
+
+var Vehicle2 = Backbone.Model.extend({
+      validate : function (attrs){
+          console.log("triggering validate method");
+          var validColors =['white','red','blue','yellow'];
+          var colorIsValid = function(attrs){
+             if(!attrs.color) return true; //no color is valid value
+             return _(validColors).include(attrs.color);
+          }
+
+          if(!colorIsValid(attrs)){
+               return "color must be one of : " + validColors.join(",");
+          }
+      }
+});
+
+var car1 = new Vehicle2();
+
+// You'll have to register an error event.
+
+car1.on('invalid', function(model, error){
+    console.log("triggering error....");
+    console.log(error);
+});
+
+car1.set('foo','bar');
+car1.set('color','black', {validate : true});
+
+console.log(car1.get('color'));
