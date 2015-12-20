@@ -84,8 +84,47 @@ cat.set ({
 });
 
 //if you append the below page to browser window, it will print the alert window
-cat.set({description : '<script> alert('This is injection'); </script>'})
+cat.set({description : '<script> alert("This is injection"); </script>'})
 
 cat.dump();
 
 console.log(cat.escape('description')); // &lt;script&gt; This is injection &lt;/script&gt;
+
+//---- Events
+
+// -- Models raise events when the state changes.'change' event listens for a state change.
+
+//ford.on('change', function(){})
+//ford.on('change:color', function(){}) //listen for change to single property.
+//This technique is called event name spacing
+
+var ford = new Backbone.Model({
+    type : 'car',
+    color : 'blue'
+})
+
+ford.on('change', function(){
+      console.log( "something" + " has changed"); //is there a way to display which property has changed ?
+})
+
+ford.on('change:color', function(){
+      console.log("Color " + " has changed");
+})
+
+
+ford.set('type','van');
+ford.set('color','red');
+
+// Use the trigger method to trigger an event.
+
+//ford.trigger('retired');
+
+var volcano = _.extend({},Backbone.Events); //add the contents of Backbone.Events and returns the volcano object
+
+volcano.on("disaster:eruption", function(opt) {
+   console.log("duck and cover " + opt.plan );
+});
+
+volcano.trigger('disaster:eruption',{plan : 'run'});
+
+volcano.off('disaster:eruption'); //Remove every event handler associated with that event. 
