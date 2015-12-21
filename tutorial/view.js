@@ -149,3 +149,28 @@ var v = new headerView({model: h});
 $('body').append(v.render().el);
 
 //v.remove();
+
+
+/*Events in views .
+
+this.$('.clickable').click(handleClick); - This can be written as ..below example
+*/
+
+var FormView = Backbone.View.extend({
+    events : {
+        'click .clickable' : 'handleClick',
+        'change' : function() {console.log('handle change');}
+    },
+
+    render : function (){
+      this.$el.html ('<input type = "text" class= "clickable" placeholder="clickable"/> <input type="text"/>');
+      return this;
+    },
+
+    handleClick : function() {
+      console.log("handleClick is called");
+    }
+});
+
+var fv = new FormView();
+$('body').append(fv.render().el);
